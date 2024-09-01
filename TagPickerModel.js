@@ -1,15 +1,3 @@
-// class TagCatgegory{
-//     constructor(id,name){
-
-//     }
-// }
-
-// class TagModel{
-//     constructor(keyword, category){
-
-//     }
-// }
-
 class TagPickerModel {
     constructor(raw_list_one_category, defaultCategory, searchText = "") {
         this.list = raw_list_one_category; //NEEDS NO COOKING PERHAPS?

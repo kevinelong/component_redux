@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo</title>
+</head>
+<body>
+    <div id="fruit"></div>
+    <div id="cheese"></div>
+</body>
+<script src="./TagPickerMockData.js"></script>
+<script src="./TagPickerModel.js"></script>
+<script src="./TagPickerView.js"></script>
+<script>
+    const tpmd = new TagPickerMockData();
+
+    const tpm1 = new TagPickerModel(tpmd.data.filter(t=>t.category.name==="fruit"));
+    const tpm2 = new TagPickerModel(tpmd.data.filter(t=>t.category.name==="cheese"));
+
+    const tpv1 = new TagPickerView("#fruit", tpm1);
+    const tpv2 = new TagPickerView("#cheese", tpm2);
+</script>
+</html>
