@@ -52,57 +52,60 @@ class TagPickerModel {
 }
 
 //TESTS
-const fruit = {
-    id: 11,
-    name: "fruit"
-};
-const cheese = {
-    id: 22,
-    name: "cheese"
-};
-tpm = new TagPickerModel(
-    [
-        {
-            id: 111,
-            keyword: "apple",
-            category: fruit,
-            selected: false,
-            hidden: false
-        },
-        {
-            id: 222,
-            keyword: "cherry",
-            category: fruit,
-            selected: false,
-            hidden: false
-        },
-        {
-            id: 333,
-            keyword: "swiss",
-            category: cheese,
-            selected: false,
-            hidden: false
-        }
-    ],
-    fruit
-);
+if (typeof window === "undefined") {
+    const fruit = {
+        id: 11,
+        name: "fruit"
+    };
+    const cheese = {
+        id: 22,
+        name: "cheese"
+    };
+    tpm = new TagPickerModel(
+        [
+            {
+                id: 111,
+                keyword: "apple",
+                category: fruit,
+                selected: false,
+                hidden: false
+            },
+            {
+                id: 222,
+                keyword: "cherry",
+                category: fruit,
+                selected: false,
+                hidden: false
+            },
+            {
+                id: 333,
+                keyword: "swiss",
+                category: cheese,
+                selected: false,
+                hidden: false
+            }
+        ],
+        fruit
+    );
 
-console.log("ALL:\n", JSON.stringify(tpm.getAll(), 0, 4));
+    console.log("ALL:\n", JSON.stringify(tpm.getAll(), 0, 4));
 
-const swiss = tpm.list[2];
-tpm.onTagClick(swiss);
+    const swiss = tpm.list[2];
+    tpm.onTagClick(swiss);
 
-console.log("SWISS CLICKED:\n", JSON.stringify(tpm.getAll(), 0, 4));
+    console.log("SWISS CLICKED:\n", JSON.stringify(tpm.getAll(), 0, 4));
 
-tpm.setSearchText("a");
+    tpm.setSearchText("a");
 
-console.log("ONLY A:\n", JSON.stringify(tpm.getAll(), 0, 4));
+    console.log("ONLY A:\n", JSON.stringify(tpm.getAll(), 0, 4));
 
-tpm.clear();
+    tpm.clear();
 
-console.log("CLEARED:\n", JSON.stringify(tpm.getAll(), 0, 4));
+    console.log("CLEARED:\n", JSON.stringify(tpm.getAll(), 0, 4));
 
-tpm.add("banana"); //use default
-tpm.add("cheddar", cheese); //overide default
+    tpm.add("banana"); //use default
+    tpm.add("cheddar", cheese); //overide default
 
-console.log("WITH BANANA:\n", JSON.stringify(tpm.getAll(), 0, 4));
+    console.log("WITH BANANA:\n", JSON.stringify(tpm.getAll(), 0, 4));
+
+}
