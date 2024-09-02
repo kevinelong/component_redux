@@ -1,11 +1,11 @@
 class TagPickerModel {
-    constructor(raw_list_one_category, defaultCategory, searchText = "") {
+    constructor(raw_list_one_category, defaultCategory={name:"Other",id:undefined}, searchText = "") {
         this.list = raw_list_one_category; //NEEDS NO COOKING PERHAPS?
         this.defaultCategory = defaultCategory;
         this.searchText = searchText;
     }
     getAll() {
-        return this.list;
+        return this.list.filter(t=>t.category.id===this.defaultCategory.id);
     }
     onTagClick(tag) {
         const existing = this.list.find(t => t.id === tag.id);
@@ -17,7 +17,7 @@ class TagPickerModel {
         //TODO LOOP THROUGH ALL AND SET NON-MATCHING TO HIDDED AND MATCHING TO TRUE
         //NEVER HIDE SELECTED
         for (const tag of this.list) {
-            if (tag.selected) {
+            if (tag.selected || this.searchText === "") {
                 tag.hidden = false;
             } else if (tag.keyword.toLowerCase().startsWith(this.searchText)) {
                 tag.hidden = false;
@@ -27,7 +27,7 @@ class TagPickerModel {
         }
     }
     clear() {
-        this.searchText = "";
+        this.setSearchText("");
     }
     add(tagText, category = undefined) {
         //TODO double ensure tag doe not exist

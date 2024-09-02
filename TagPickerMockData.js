@@ -1,24 +1,32 @@
 class TagPickerMockData {
+    fruit = {
+        id: 11,
+        name: "fruit"
+    };
+    cheese = {
+        id: 22,
+        name: "cheese"
+    };
     constructor() {
         this.data =  [
             {
                 id: 111,
                 keyword: "apple",
-                category: fruit,
+                category: this.fruit,
                 selected: false,
                 hidden: false
             },
             {
                 id: 222,
                 keyword: "cherry",
-                category: fruit,
+                category: this.fruit,
                 selected: false,
                 hidden: false
             },
             {
                 id: 333,
                 keyword: "swiss",
-                category: cheese,
+                category: this.cheese,
                 selected: false,
                 hidden: false
             }

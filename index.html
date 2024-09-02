@@ -15,8 +15,8 @@
 <script>
     const tpmd = new TagPickerMockData();
 
-    const tpm1 = new TagPickerModel(tpmd.data.filter(t=>t.category.name==="fruit"));
-    const tpm2 = new TagPickerModel(tpmd.data.filter(t=>t.category.name==="cheese"));
+    const tpm1 = new TagPickerModel(tpmd.data, tpmd.fruit);
+    const tpm2 = new TagPickerModel(tpmd.data, tpmd.cheese);
 
     const tpv1 = new TagPickerView("#fruit", tpm1);
     const tpv2 = new TagPickerView("#cheese", tpm2);
