@@ -13,7 +13,7 @@ class TagPickerMockData {
                 id: 111,
                 keyword: "apple",
                 category: this.fruit,
-                selected: false,
+                selected: true,
                 hidden: false
             },
             {
@@ -26,6 +26,13 @@ class TagPickerMockData {
             {
                 id: 333,
                 keyword: "swiss",
+                category: this.cheese,
+                selected: true,
+                hidden: false
+            },
+            {
+                id: 444,
+                keyword: "cheddar",
                 category: this.cheese,
                 selected: false,
                 hidden: false

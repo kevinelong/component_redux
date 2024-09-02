@@ -7,6 +7,12 @@ class TagPickerModel {
     getAll() {
         return this.list.filter(t=>t.category.id===this.defaultCategory.id);
     }
+    getSelected(){
+        return this.getAll().filter(t=>t.selected)
+    }
+    getAvailable(){
+        return this.getAll().filter(t=>!t.selected)
+    }
     onTagClick(tag) {
         const existing = this.list.find(t => t.id === tag.id);
         existing.selected = !existing.selected; //toggle
