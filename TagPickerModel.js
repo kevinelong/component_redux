@@ -1,17 +1,21 @@
 class TagPickerModel {
-    constructor(raw_list_one_category, defaultCategory={name:"Other",id:undefined}, searchText = "") {
-        this.list = raw_list_one_category; //NEEDS NO COOKING PERHAPS?
+    constructor(api, defaultCategory = { name: "Other", id: undefined }, searchText = "") {
+        this.api = api;
+        this.list = api.data; //NEEDS NO COOKING PERHAPS?
         this.defaultCategory = defaultCategory;
         this.searchText = searchText;
     }
     getAll() {
+        return this.list//.filter(t=>t.category.id===this.defaultCategory.id);
+    }
+    getDefault() {
         return this.list.filter(t=>t.category.id===this.defaultCategory.id);
     }
-    getSelected(){
-        return this.getAll().filter(t=>t.selected)
+    getSelected() {
+        return this.getDefault().filter(t => t.selected)
     }
-    getAvailable(){
-        return this.getAll().filter(t=>!t.selected)
+    getAvailable() {
+        return this.getDefault().filter(t => !t.selected)
     }
     onTagClick(tag) {
         const existing = this.list.find(t => t.id === tag.id);
@@ -37,11 +41,14 @@ class TagPickerModel {
     }
     add(tagText, category = undefined) {
         //TODO double ensure tag doe not exist
-        this.list.push({
+        const tag = this.api.add({
             id: undefined,
             keyword: tagText,
             category: category ? category : this.defaultCategory
         });
+        // this.list.push(tag); //list is a pointer/reference to the original api list so this would push it a second time.
+        // this.list = this.api.data; // redunant for the same reason above
+        return tag;
     }
 }
 
@@ -74,6 +81,13 @@ if (typeof window === "undefined") {
             {
                 id: 333,
                 keyword: "swiss",
+                category: cheese,
+                selected: false,
+                hidden: false
+            },
+            {
+                id: 444,
+                keyword: "cheddar",
                 category: cheese,
                 selected: false,
                 hidden: false

@@ -7,6 +7,7 @@ class TagPickerMockData {
         id: 22,
         name: "cheese"
     };
+    max_id = 444;
     constructor() {
         this.data =  [
             {
@@ -39,4 +40,10 @@ class TagPickerMockData {
             }
         ]
     };
+    add(tag){
+        this.max_id++;
+        tag.id = this.max_id;
+        this.data.push(tag);
+        return tag;
+    }
 }
