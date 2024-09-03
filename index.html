@@ -12,9 +12,10 @@
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             font-size: 2dvh;
             margin: 0;
-            padding:0;
+            padding: 0;
         }
-        body{
+
+        body {
             padding: 1rem;
         }
 
@@ -28,31 +29,39 @@
             border-radius: 6px;
             margin: 3px 6px;
             padding: 3px 6px;
+            user-select: none;
         }
-        .tag-picker-view h1{
+
+        .tag-picker-view h1 {
             font-size: 1.4rem;
             margin-top: 1.5rem;
         }
-        .tag-picker-view h2{
+
+        .tag-picker-view h2 {
             font-size: 1.3rem;
             margin-top: 1.4rem;
         }
-        .tag-picker-view h3{
+
+        .tag-picker-view h3 {
             font-size: 1.2rem;
             margin-top: 1.3rem;
         }
-        .tag-picker-view h4{
+
+        .tag-picker-view h4 {
             font-size: 1.1rem;
             margin-top: 1.2rem;
         }
-        .tag-picker-view input.searchText{
-            width:74%;
+
+        .tag-picker-view input.searchText {
+            width: 74%;
             display: inline-block;
         }
-        .tag-picker-view button.addButton{
+
+        .tag-picker-view button.addButton {
             width: auto;
             display: inline-block;
         }
+
         input[type="text"] {
             margin: 0;
             background-image: url(../images/icons/icon-search-black.svg);
@@ -79,16 +88,24 @@
             flex-direction: row;
             justify-content: center;
             vertical-align: middle;
-            margin: 0 0.25em 0.25em 0;
-            padding:1dvh 1dvh 0.25dvh;
+            margin: 0 0.25rem 0.25rem 0;
+            padding: 0.3rem 0.5rem 0rem;
             width: auto;
-            box-shadow: 1px 1px 2px black;
+            box-shadow: 0.1rem 0.1rem 0.2rem black;
             cursor: pointer;
             text-transform: capitalize;
             text-decoration: none;
             height: 1.25rem;
             align-items: center;
             white-space: nowrap;
+            user-select: none;
+        }
+
+        .tag-results {
+            border: 1px solid lightgray;
+            border-radius: 0.125rem;
+            padding: 1rem;
+            margin: 0.25rem 0 0.25rem 0;
         }
 
         .taste-match input[type="text"] {

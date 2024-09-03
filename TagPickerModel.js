@@ -1,7 +1,10 @@
 class TagPickerModel {
     constructor(api, defaultCategory = { name: "Other", id: undefined }, searchText = "") {
         this.api = api;
-        this.list = api.data; //NEEDS NO COOKING PERHAPS?
+        this.list = api.data.map(t=>{
+            t.hidden=false;
+            return t;
+    }); //NEEDS NO COOKING PERHAPS?
         this.defaultCategory = defaultCategory;
         this.searchText = searchText;
     }
@@ -47,7 +50,7 @@ class TagPickerModel {
             category: category ? category : this.defaultCategory
         });
         // this.list.push(tag); //list is a pointer/reference to the original api list so this would push it a second time.
-        // this.list = this.api.data; // redunant for the same reason above
+        this.list = this.api.data; // redunant for the same reason above?
         this.onTagClick(tag);
         return tag;
     }

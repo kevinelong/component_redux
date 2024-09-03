@@ -23,7 +23,7 @@ class TagPickerView {
             }</div>`;
     }
     tagList(tags, className = "tags") {
-        return `<div class="tag-list ${className}">${tags.map(this.tag).join(" ")}</div>`
+        return `<div class="tag-list tag-results ${className}">${tags.map(this.tag).join(" ")}</div>`
     }
     availableTags() {
         return this.tagList(this.model.getAvailable(), "available-tags");
@@ -36,11 +36,12 @@ class TagPickerView {
         <div class="tag-picker-view">
             <h1>${name}</h1><br>
 
-            <h4>Available:</h4>
-            <input type="text" value="${this.model.searchText}" class="searchText" placeholder="Filter Available"><button class="addButton">Add</button><br>
+            <h3>Available:</h3>
+            <input type="text" value="${this.model.searchText}" class="searchText" placeholder="Filter Available"><button class="addButton">Add</button>
+            <h4>Matching Search Results</h4>
             ${this.availableTags()}
 
-            <h4>Selected:</h4>
+            <h3>Selected:</h3>
             ${selectedTags}
         </div>
         `;
