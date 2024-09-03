@@ -48,6 +48,7 @@ class TagPickerModel {
         });
         // this.list.push(tag); //list is a pointer/reference to the original api list so this would push it a second time.
         // this.list = this.api.data; // redunant for the same reason above
+        this.onTagClick(tag);
         return tag;
     }
 }

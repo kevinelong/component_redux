@@ -41,6 +41,7 @@ class TagPickerMockData {
         ]
     };
     add(tag){
+        //TODO COULD DO A DUPLICATE CHECK AND RAISE AND ERROR AND OR RETURN FALSE OR UNDEFINED.
         this.max_id++;
         tag.id = this.max_id;
         this.data.push(tag);
