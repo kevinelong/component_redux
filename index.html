@@ -123,10 +123,10 @@
 <script src="./TagPickerModel.js"></script>
 <script src="./TagPickerView.js"></script>
 <script>
-    const tpmd = new TagPickerMockData();
+    const tpmd = new TagPickerMockData(); //FAKE API/DATABASE
 
-    const tpm1 = new TagPickerModel(tpmd, tpmd.fruit);
-    const tpm2 = new TagPickerModel(tpmd, tpmd.cheese);
+    const tpm1 = new TagPickerModel(e => tpmd.getData(e), e => tpmd.dispatchEvent(e), {name:"fruit", id: 11});
+    const tpm2 = new TagPickerModel(e => tpmd.getData(e), e => tpmd.dispatchEvent(e), {name:"cheese", id: 22});
 
     const tpv1 = new TagPickerView("#fruit", tpm1);
     const tpv2 = new TagPickerView("#cheese", tpm2);

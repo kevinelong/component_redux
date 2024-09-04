@@ -1,18 +1,37 @@
+class VitaEvent {
+    constructor(eventType = "action", eventOptions = {
+        target: {},
+        which: undefined,
+        id: undefined,
+        data: {}
+    }) {
+        this.type = eventType;
+        this.options = eventOptions;
+    }
+}
+
 class TagPickerModel {
-    constructor(api, defaultCategory = { name: "Other", id: undefined }, searchText = "") {
-        this.api = api;
-        this.list = api.data.map(t=>{
-            t.hidden=false;
-            return t;
-    }); //NEEDS NO COOKING PERHAPS?
+    constructor(
+        getData = () => { data },
+        dispatchEvent = (m) => { m },
+        defaultCategory = { name: "Other", id: undefined },
+        searchText = ""
+    ) {
+        this.getData = getData;
+        this.dispatchEvent = dispatchEvent;
         this.defaultCategory = defaultCategory;
         this.searchText = searchText;
+
+        this.list = this.getData().map(t => {
+            t.hidden = false;
+            return t;
+        }); //NEEDS NO COOKING PERHAPS?
     }
     getAll() {
         return this.list//.filter(t=>t.category.id===this.defaultCategory.id);
     }
     getDefault() {
-        return this.list.filter(t=>t.category.id===this.defaultCategory.id);
+        return this.list.filter(t => t.category.id === this.defaultCategory.id);
     }
     getSelected() {
         return this.getDefault().filter(t => t.selected)
@@ -20,11 +39,7 @@ class TagPickerModel {
     getAvailable() {
         return this.getDefault().filter(t => !t.selected)
     }
-    onTagClick(tag) {
-        const existing = this.list.find(t => t.id === tag.id);
-        existing.selected = !existing.selected; //toggle
-        //HIDDEN WILL ALREADY BE CORRECTLY SET
-    }
+
     setSearchText(text) {
         this.searchText = text.trim().toLowerCase();
         //TODO LOOP THROUGH ALL AND SET NON-MATCHING TO HIDDED AND MATCHING TO TRUE
@@ -42,17 +57,45 @@ class TagPickerModel {
     clear() {
         this.setSearchText("");
     }
+    onTagClick(tag) {
+        const existing = this.list.find(t => t.id === tag.id);
+        existing.selected = !existing.selected; //toggle
+        //HIDDEN WILL ALREADY BE CORRECTLY SET
+        const eventName = existing.selected ? "select" : "deselect";
+        const tagEvent = new VitaEvent(
+            eventName,
+            {
+                id: undefined,
+                which: "tag",
+                target: undefined,
+                data: tag
+            }
+        );
+        this.dispatchEvent(tagEvent);
+    }
+
     add(tagText, category = undefined) {
         //TODO double ensure tag doe not exist
-        const tag = this.api.add({
+        const tag = {
             id: undefined,
             keyword: tagText,
             category: category ? category : this.defaultCategory
-        });
-        // this.list.push(tag); //list is a pointer/reference to the original api list so this would push it a second time.
-        this.list = this.api.data; // redunant for the same reason above?
-        this.onTagClick(tag);
-        return tag;
+        };
+        const createEvent = new VitaEvent(
+            "create",
+            {
+                id: undefined,
+                which: "tag",
+                target: undefined,
+                data: tag
+            }
+        );
+        this.dispatchEvent(createEvent);
+
+        this.list = this.getData(); // redunant for the same reason above?
+        const added = this.list[this.list.length-1]; //get last array element pushed
+        this.onTagClick(added);
+        return added;
     }
 }
 
@@ -66,37 +109,48 @@ if (typeof window === "undefined") {
         id: 22,
         name: "cheese"
     };
+    const data = [
+        {
+            id: 111,
+            keyword: "apple",
+            category: fruit,
+            selected: false,
+            hidden: false
+        },
+        {
+            id: 222,
+            keyword: "cherry",
+            category: fruit,
+            selected: false,
+            hidden: false
+        },
+        {
+            id: 333,
+            keyword: "swiss",
+            category: cheese,
+            selected: false,
+            hidden: false
+        },
+        {
+            id: 444,
+            keyword: "cheddar",
+            category: cheese,
+            selected: false,
+            hidden: false
+        }
+    ];
+
     tpm = new TagPickerModel(
-        [
-            {
-                id: 111,
-                keyword: "apple",
-                category: fruit,
-                selected: false,
-                hidden: false
-            },
-            {
-                id: 222,
-                keyword: "cherry",
-                category: fruit,
-                selected: false,
-                hidden: false
-            },
-            {
-                id: 333,
-                keyword: "swiss",
-                category: cheese,
-                selected: false,
-                hidden: false
-            },
-            {
-                id: 444,
-                keyword: "cheddar",
-                category: cheese,
-                selected: false,
-                hidden: false
+        () => data,
+        (e) => {
+            if (e.type === "create") {
+                data.push(e.options.data);
+            } else if (e.type === "select") {
+                data.find(t => t.id === e.options.data.id).selected = true;
+            } else if (e.type === "deselect") {
+                data.find(t => t.id === e.options.data.id).selected = false;
             }
-        ],
+        },
         fruit
     );
 
