@@ -35,7 +35,7 @@ class TagPickerView {
         this.target.innerHTML = `
         <div class="tag-picker-view">
             <h1 style="text-transform:capitalize;">Your ${name} Interests</h1>
-            <h2>What are your ${name} interests:</h2>
+            <h2>What are your ${name} interests?</h2>
             <h3>Available:</h3>
             <input type="text" value="${this.model.searchText}" class="searchText" placeholder="Filter Available"><button class="addButton">Add</button>
             <h4>Matching Search Results</h4>
