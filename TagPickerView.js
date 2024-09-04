@@ -34,13 +34,12 @@ class TagPickerView {
 
         this.target.innerHTML = `
         <div class="tag-picker-view">
-            <h1>${name}</h1><br>
-
+            <h1 style="text-transform:capitalize;">Your ${name} Interests</h1>
+            <h2>What are your ${name} interests:</h2>
             <h3>Available:</h3>
             <input type="text" value="${this.model.searchText}" class="searchText" placeholder="Filter Available"><button class="addButton">Add</button>
             <h4>Matching Search Results</h4>
             ${this.availableTags()}
-
             <h3>Selected:</h3>
             ${selectedTags}
         </div>
@@ -48,7 +47,21 @@ class TagPickerView {
         //TODO ADD LISTENERS
         this.searchText = this.target.querySelector(".searchText");
         this.addButton = this.target.querySelector(".addButton");
-        this.searchText.addEventListener("keyup", e => e.keyCode == 13 ? this.add(e.target.value) : this.setSearchText(e.target.value));
+        this.searchText.addEventListener("keyup", e => {
+            if(e.keyCode == 13){
+                const matches = this.target.querySelectorAll('.available-tags .tag:not([style="display:none"])');
+                //if there are none
+                if(matches.length === 0){
+                    //then add a new one
+                    this.add(e.target.value);
+                }else{
+                    //otherwise click the first
+                    matches[0].dispatchEvent(new Event("click"));
+                }
+            }else{
+                this.setSearchText(e.target.value);
+            }
+        });
         this.addButton.addEventListener("click", e => this.add(e.target.previousElementSibling.value));
         this.target.querySelectorAll(".tag").forEach(te => te.addEventListener("click", e => this.onTagClick({
             id: Number(e.target.dataset.id),
