@@ -107,10 +107,15 @@
             border-radius: 0.125rem;
             padding: 1rem;
             margin: 0.25rem 0 0.25rem 0;
+            min-height: 1.79rem;
         }
 
         .taste-match input[type="text"] {
             width: clamp(100px, 100%, 100%);
+        }
+
+        .heading {
+            text-transform: capitalize;
         }
     </style>
 </head>
@@ -125,8 +130,8 @@
 <script>
     const tpmd = new TagPickerMockData(); //FAKE API/DATABASE
 
-    const tpm1 = new TagPickerModel(e => tpmd.getData(e), e => tpmd.dispatchEvent(e), {name:"fruit", id: 11});
-    const tpm2 = new TagPickerModel(e => tpmd.getData(e), e => tpmd.dispatchEvent(e), {name:"cheese", id: 22});
+    const tpm1 = new TagPickerModel(e => tpmd.getData(e), e => tpmd.dispatchEvent(e), { name: "fruit", id: 11 });
+    const tpm2 = new TagPickerModel(e => tpmd.getData(e), e => tpmd.dispatchEvent(e), { name: "cheese", id: 22 });
 
     const tpv1 = new TagPickerView("#fruit", tpm1);
     const tpv2 = new TagPickerView("#cheese", tpm2);
