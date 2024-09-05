@@ -25,8 +25,7 @@ class HTMLView {
         attrs.placeholder = placeholder;
         return this.htmlTagSelfClosing("input", className, attrs);
     }
-    button(content, callBackFunctionName, className = "", attrs = {}) {
-        attrs.onclick = `e=>${callBackFunctionName}(e)`;
+    button(content, className = "", attrs = {}) {
         return this.htmlTag("button", content, className, attrs);
     }
     h(content, level = 1, className = "", attrs = {}) {
@@ -62,8 +61,7 @@ class TagPickerView extends HTMLView {
     }
     inputRow(text) {
         return this.input(text, "searchText", "Filter Available", { "type": "text" }) +
-            this.button("Add", e => this.add(e.target.previousElementSibling.value), "addButton")
-            ;
+            this.button("Add", "addButton");
     }
     render() {
         const content = this.h(`Your ${this.name} Interests`, 1, "heading") +
@@ -81,9 +79,9 @@ class TagPickerView extends HTMLView {
         this.searchText = this.target.querySelector(".searchText");
         this.addButton = this.target.querySelector(".addButton");
         this.searchText.addEventListener("keyup", e => this.handleKeyUp(e));
-        // this.addButton.addEventListener("click",
-        //     e => this.add(e.target.previousElementSibling.value)
-        // );
+        this.addButton.addEventListener("click",
+            e => this.add(e.target.previousElementSibling.value)
+        );
         this.target.querySelectorAll(".tag").forEach(
             te => te.addEventListener("click",
                 (e) => this.onTagClick({
