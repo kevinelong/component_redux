@@ -36,7 +36,7 @@ class TagPickerView extends HTMLView {
         return this.tagList(this.model.getAvailable(), "available-tags");
     }
     inputRow(text) {
-        return this.input(text, "searchText", "Filter Available", { "type": "text" }) +
+        return this.input(text, "searchText", "Type to filter available; enter to select or add.", { "type": "text" }) +
             this.button("Add", "addButton");
     }
     render() {
