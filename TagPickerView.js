@@ -92,6 +92,9 @@ class TagPickerView extends HTMLView {
                 //otherwise click the first
                 matches[0].dispatchEvent(new Event("click"));
             }
+        }else{
+            this.setSearchText(text);
+            this.updateAvailableTags();
         }
     }
     setSearchText(text) {
