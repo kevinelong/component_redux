@@ -31,6 +31,16 @@ class HTMLView {
     h(content, level = 1, className = "", attrs = {}) {
         return this.htmlTag(`h${level}`, content, className, attrs);
     }
+    element(html){
+        const el = document.createElement('div');
+        el.innerHTML = html.trim();
+        return el.firstChild;
+    }
+    elements(html){
+        const el = document.createElement('div');
+        el.innerHTML = html.trim();
+        return el.childNodes;
+    }
 }
 class TagPickerView extends HTMLView {
     constructor(targetName = "body", model = { name: "Demo" }) {
@@ -50,6 +60,16 @@ class TagPickerView extends HTMLView {
             }
         );
     }
+    tagElement(tagData) {
+        const te = this.element(this.tag(tagData));
+        te.addEventListener("click",
+            (e) => this.onTagClick(e, {
+                id: Number(e.target.dataset.id),
+                keyword: e.target.dataset.keyword
+            })
+        );
+        return te;
+    }
     tagList(tags, className = "tags") {
         return this.div(
             tags.map(t => this.tag(t)).join(" "),
@@ -64,7 +84,13 @@ class TagPickerView extends HTMLView {
             this.button("Add", "addButton");
     }
     render() {
-        const content = this.h(`Your ${this.name} Interests`, 1, "heading") +
+        this.target.innerHTML = this.div("Loading...", "tag-picker-view");
+        this.updateFullView();
+        this.addEventListeners();
+    }
+    updateFullView() {
+        const root = this.target.querySelector(".tag-picker-view");
+        root.innerHTML = this.h(`Your ${this.name} Interests`, 1, "heading") +
             this.h(`What are your ${this.name} interests?`, 2) +
             this.h(`Available:`, 3) +
             this.inputRow(this.model.searchText) +
@@ -72,8 +98,13 @@ class TagPickerView extends HTMLView {
             this.availableTags() +
             this.h(`Selected:`, 4) +
             this.tagList(this.model.getSelected());
-        this.target.innerHTML = this.div(content, "tag-picker-view");
-        this.addEventListeners();
+    }
+    updateAvailableTags() {
+        this.target.querySelector(".available-tags").outerHTML = this.availableTags();
+        this.target.querySelectorAll(".available-tags .tag").forEach(te => te.addEventListener("click", e => this.onTagClick(e, {
+            id: Number(e.target.dataset.id),
+            keyword: e.target.dataset.keyword
+        })));
     }
     addEventListeners() {
         this.searchText = this.target.querySelector(".searchText");
@@ -84,7 +115,7 @@ class TagPickerView extends HTMLView {
         );
         this.target.querySelectorAll(".tag").forEach(
             te => te.addEventListener("click",
-                (e) => this.onTagClick({
+                (e) => this.onTagClick(e, {
                     id: Number(e.target.dataset.id),
                     keyword: e.target.dataset.keyword
                 })
@@ -93,7 +124,7 @@ class TagPickerView extends HTMLView {
         this.searchText.focus();
     }
     handleKeyUp(e) {
-        if (e.keyCode == 13) {
+        if (e.keyCode == 13 && e.target.value) {
             const matches = this.target.querySelectorAll('.available-tags .tag:not([style="display:none"])');
             //if there are none
             if (matches.length === 0) {
@@ -103,30 +134,38 @@ class TagPickerView extends HTMLView {
                 //otherwise click the first
                 matches[0].dispatchEvent(new Event("click"));
             }
+            this.target.querySelector(".searchText").value="";
         } else {
             this.setSearchText(e.target.value);
         }
     }
-
-    renderAvailableTags() {
-        this.target.querySelector(".available-tags").outerHTML = this.availableTags();
-        this.target.querySelectorAll(".available-tags .tag").forEach(te => te.addEventListener("click", e => this.onTagClick({
-            id: Number(e.target.dataset.id),
-            keyword: e.target.dataset.keyword
-        })));
-    }
-
     setSearchText(text) {
         this.model.setSearchText(text);
-        this.renderAvailableTags();
+        this.updateAvailableTags();
     }
     add(text) {
-        this.model.add(text);
+        const newTagData = this.model.add(text);
         this.model.clear();
-        this.render();
+        this.target.querySelector(".searchText").value="";
+        if(!newTagData){
+            return;
+        }
+        const selectedTagsElement = this.target.querySelector(".tags");
+        const te = this.tagElement(newTagData);
+        selectedTagsElement.appendChild(te);
+        this.updateAvailableTags();
     }
-    onTagClick(tag) {
+    onTagClick(e, tag) {
         this.model.onTagClick(tag);
-        this.render();
+        const tagElement = e.target.closest(".tag");
+        const originalParent = tagElement.closest(".tag-list");
+        let newParent = undefined;
+        if (originalParent.classList.contains("available-tags")) {
+            newParent = this.target.querySelector(".tags");
+        } else {
+            newParent = this.target.querySelector(".available-tags");
+        }
+        newParent.appendChild(tagElement);
+        // this.render();
     }
 }

@@ -73,27 +73,32 @@ class TagPickerModel {
         );
         this.dispatchEvent(tagEvent);
     }
-
-    add(tagText, category = undefined) {
-        //TODO double ensure tag doe not exist
-        const tag = {
-            id: undefined,
-            keyword: tagText,
-            category: category ? category : this.defaultCategory
-        };
-        const createEvent = new VitaEvent(
-            "create",
-            {
-                id: undefined,
-                which: "tag",
-                target: undefined,
-                data: tag
+    find(keyword) {
+        return this.getDefault().find(t => {
+            if (t.keyword === keyword) {
+                return t;
             }
-        );
+        });
+    }
+    add(tagText, category = undefined) {
+        //double ensure tag doe not exist
+        const existing = this.find(tagText);
+        if (existing) {
+            return false;
+        }
+        const categoryFinal = category ? category : this.defaultCategory;
+        const tag = { keyword: tagText, category: categoryFinal };
+        const e = {
+            id: undefined,
+            which: "tag",
+            target: undefined,
+            data: tag,
+        };
+        const createEvent = new VitaEvent("create", e);
         this.dispatchEvent(createEvent);
 
         this.list = this.getData(); // redunant for the same reason above?
-        const added = this.list[this.list.length-1]; //get last array element pushed
+        const added = this.list[this.list.length - 1]; //get last array element pushed
         this.onTagClick(added);
         return added;
     }
