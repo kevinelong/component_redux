@@ -1,0 +1,111 @@
+*,
+body,
+:root {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 2dvh;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding: 1rem;
+}
+
+button,
+.button {
+    width: calc(100% - 12px);
+    line-height: 2em;
+    color: white;
+    background: #888888;
+    border-style: none;
+    border-radius: 6px;
+    margin: 3px 6px;
+    padding: 3px 6px;
+    user-select: none;
+}
+
+.tag-picker-view h1 {
+    font-size: 1.8rem;
+    margin-top: 1.5rem;
+}
+
+.tag-picker-view h2 {
+    font-size: 1.4rem;
+    margin-top: 1.4rem;
+    color: #757575;
+}
+
+.tag-picker-view h3 {
+    font-size: 1.2rem;
+    margin-top: 1.3rem;
+}
+
+.tag-picker-view h4 {
+    font-size: 1.1rem;
+    margin-top: 1.2rem;
+}
+
+.tag-picker-view input.searchText {
+    width: 74%;
+    display: inline-block;
+}
+
+.tag-picker-view button.addButton {
+    width: auto;
+    display: inline-block;
+}
+
+input[type="text"] {
+    margin: 0;
+    background-image: url(../images/icons/icon-search-black.svg);
+    background-repeat: no-repeat;
+    width: 98%;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    border: none;
+    box-shadow: 0.1rem 0.1rem 0.2rem 0 #0008;
+    background-position: 0.5rem 0.5rem;
+}
+
+.tag,
+.main-interests .hash-tag {
+    display: inline-block;
+}
+
+.tag,
+.hash-tag {
+    color: white;
+    background: darkgoldenrod;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    flex-direction: row;
+    justify-content: center;
+    vertical-align: middle;
+    margin: 0 0.25rem 0.25rem 0;
+    padding: 0.3rem 0.5rem 0rem;
+    width: auto;
+    box-shadow: 0.1rem 0.1rem 0.2rem black;
+    cursor: pointer;
+    text-transform: capitalize;
+    text-decoration: none;
+    height: 1.25rem;
+    align-items: center;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.tag-results {
+    border: 1px solid lightgray;
+    border-radius: 0.125rem;
+    padding: 1rem;
+    margin: 0.25rem 0 0.25rem 0;
+    min-height: 1.79rem;
+}
+
+.taste-match input[type="text"] {
+    width: clamp(100px, 100%, 100%);
+}
+
+.heading {
+    text-transform: capitalize;
+}
