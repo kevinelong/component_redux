@@ -31,12 +31,12 @@ class HTMLView {
     h(content, level = 1, className = "", attrs = {}) {
         return this.htmlTag(`h${level}`, content, className, attrs);
     }
-    element(html){
+    element(html) {
         const el = document.createElement('div');
         el.innerHTML = html.trim();
         return el.firstChild;
     }
-    elements(html){
+    elements(html) {
         const el = document.createElement('div');
         el.innerHTML = html.trim();
         return el.childNodes;
@@ -124,30 +124,30 @@ class TagPickerView extends HTMLView {
         this.searchText.focus();
     }
     handleKeyUp(e) {
-        if (e.keyCode == 13 && e.target.value) {
+        const text = e.target.value;
+        if (e.keyCode == 13 && text) {
             const matches = this.target.querySelectorAll('.available-tags .tag:not([style="display:none"])');
             //if there are none
             if (matches.length === 0) {
                 //then add a new one
-                this.add(e.target.value);
+                this.add(text);
+                this.setSearchText("");
             } else {
                 //otherwise click the first
                 matches[0].dispatchEvent(new Event("click"));
             }
-            this.target.querySelector(".searchText").value="";
-        } else {
-            this.setSearchText(e.target.value);
         }
     }
     setSearchText(text) {
         this.model.setSearchText(text);
+        this.target.querySelector(".searchText").value = text;
         this.updateAvailableTags();
     }
     add(text) {
         const newTagData = this.model.add(text);
         this.model.clear();
-        this.target.querySelector(".searchText").value="";
-        if(!newTagData){
+        this.setSearchText("");
+        if (!newTagData) {
             return;
         }
         const selectedTagsElement = this.target.querySelector(".tags");
