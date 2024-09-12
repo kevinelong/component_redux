@@ -12,7 +12,7 @@ class VitaEvent {
 
 class TagPickerModel {
     constructor(
-        getData = () => { data },
+        getData = async () => { data },
         dispatchEvent = (m) => { m },
         defaultCategory = { name: "Other", id: undefined },
         searchText = ""
@@ -21,7 +21,6 @@ class TagPickerModel {
         this.dispatchEvent = dispatchEvent;
         this.defaultCategory = defaultCategory;
         this.searchText = searchText;
-
         this.list = this.getData().map(t => {
             t.hidden = false;
             return t;
@@ -80,7 +79,7 @@ class TagPickerModel {
             }
         });
     }
-    add(tagText, category = undefined) {
+    async add(tagText, category = undefined) {
         //double ensure tag doe not exist
         const existing = this.find(tagText);
         if (existing) {

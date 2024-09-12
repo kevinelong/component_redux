@@ -1,0 +1,38 @@
+[
+  {
+    "id": 111,
+    "keyword": "apple",
+    "category": {
+      "id": 11,
+      "name": "fruit"
+    },
+    "selected": true
+  },
+  {
+    "id": 222,
+    "keyword": "cherry",
+    "category": {
+      "id": 11,
+      "name": "fruit"
+    },
+    "selected": false
+  },
+  {
+    "id": 333,
+    "keyword": "swiss",
+    "category": {
+      "id": 22,
+      "name": "cheese"
+    },
+    "selected": true
+  },
+  {
+    "id": 444,
+    "keyword": "cheddar",
+    "category": {
+      "id": 22,
+      "name": "cheese"
+    },
+    "selected": false
+  }
+]

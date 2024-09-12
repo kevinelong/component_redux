@@ -89,7 +89,7 @@ class TagPickerView extends HTMLView {
                 this.add(text);
                 this.setSearchText("");
             } else {
-                //otherwise click the first
+                //otherwise click the first match
                 matches[0].dispatchEvent(new Event("click"));
             }
         }else{
